@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>Deployment</title>
+</head>
+<body>
+
+Deployment via Ansible completed successfully triggered by {{ git_local_user.stdout }}.
+
+<p><strong>Inventory</strong></p>
+
+<p>	Host: {{ inventory_hostname }} <br>
+	Target: {{ ansistrano_deploy_to }} <br>
+	Inventory: {{ inventory_dir }}
+</p>
+
+<p><strong>Source</strong></p>
+
+<p>	Repo: {{ ansistrano_git_repo }} <br>
+	Branch: {{ ansistrano_git_branch }} <br>
+	Commit: {{ git_hash_short.stdout }}
+</p>
+
+<p><strong>Commit</strong></p>
+
+<p>Author: {{ git_user.stdout }}</p>
+
+<p>{{ git_message.stdout }}</p>
+
+</body>
+</html>

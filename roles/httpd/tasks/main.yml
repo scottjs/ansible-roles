@@ -1,0 +1,19 @@
+---
+# file: roles/httpd/tasks/main.yml
+
+- name: set selinux enforcing
+  selinux: policy=targeted state=permissive
+
+- name: create vhost directories
+  # file: path={{ item.projectroot }} state=directory owner={{ apache_user }} group={{ apache_user }}
+  file: path={{ item.projectroot }} state=directory
+  with_items: "{{ apache_vhosts }}"
+  when: apache_create_vhosts
+
+- name: set apache sendfile option
+  lineinfile:
+    dest: "/etc/httpd/conf/httpd.conf"
+    regexp: "^EnableSendfile on"
+    line: "EnableSendfile off"
+    state: present
+  notify: restart apache

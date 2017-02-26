@@ -1,0 +1,45 @@
+---
+- name: update yum
+  yum: name=* state=latest
+
+- name: install standard tools
+  yum: name={{ item }} state=installed
+  with_items:
+     - git
+     - nano
+     - curl
+     - wget
+     - vim
+     - man
+     - unzip
+     - ntp
+     - ed
+     - bind-utils
+
+- name: set up time zone symlink
+  file: src=/usr/share/zoneinfo/Europe/London dest=/etc/localtime owner=root group=root state=link
+
+- name: configure ntp
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify:
+    - restart ntpd
+  tags: ntp
+
+- name: ensure ntp is running and enabled
+  service: name=ntpd state=running enabled=yes
+  tags: ntp
+
+- name: disable GSSAPIAuthentication for ssh login
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^GSSAPIAuthentication"
+    line: "GSSAPIAuthentication no"
+    state: present
+  notify: restart sshd
+
+- name: disable UseDNS for ssh login
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    line: "UseDNS no"
+    state: present
+  notify: restart sshd

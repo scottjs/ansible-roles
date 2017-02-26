@@ -1,0 +1,18 @@
+---
+# file: roles/php/tasks/main.yml
+
+- name: update php config to include mailhog
+  lineinfile:
+    dest: "/etc/php.ini"
+    regexp: "^sendmail_path = /usr/sbin/sendmail -t -i"
+    line: "sendmail_path = /usr/sbin/ssmtp -t"
+    state: present
+  notify: restart apache
+
+- name: update php config to enable short open tags
+  lineinfile:
+    dest: "/etc/php.ini"
+    regexp: "^short_open_tag = False"
+    line: "short_open_tag = True"
+    state: present
+  notify: restart apache
