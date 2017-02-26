@@ -1,4 +1,6 @@
 ---
+# file: roles/common/tasks/main.yml
+
 - name: update yum
   yum: name=* state=latest
 
@@ -36,6 +38,7 @@
     line: "GSSAPIAuthentication no"
     state: present
   notify: restart sshd
+  ignore_errors: yes
 
 - name: disable UseDNS for ssh login
   lineinfile:
@@ -43,3 +46,4 @@
     line: "UseDNS no"
     state: present
   notify: restart sshd
+  ignore_errors: yes
