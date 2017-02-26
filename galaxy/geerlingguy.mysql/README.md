@@ -18,12 +18,16 @@ No special requirements; note that this role requires root access, so either run
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
     mysql_user_home: /root
+    mysql_user_name: root
+    mysql_user_password: root
 
-The home directory inside which Python MySQL settings will be stored, which Ansible will use when connecting to MySQL. This should be the home directory of the user which runs this Ansible role.
+The home directory inside which Python MySQL settings will be stored, which Ansible will use when connecting to MySQL. This should be the home directory of the user which runs this Ansible role. The `mysql_user_name` and `mysql_user_password` can be set if you are running this role under a non-root user account and want to set a non-root user.
 
+    mysql_root_home: /root
+    mysql_root_username: root
     mysql_root_password: root
 
-The MySQL root user account password.
+The MySQL root user account details.
 
     mysql_root_password_update: no
 
@@ -34,6 +38,11 @@ Whether to force update the MySQL root user's password. By default, this role wi
     mysql_enabled_on_startup: yes
 
 Whether MySQL should be enabled on startup.
+
+    mysql_config_file: *default value depends on OS*
+    mysql_config_include_dir: *default value depends on OS*
+    
+The main my.cnf configuration file and include directory.
 
     overwrite_global_mycnf: yes
 
@@ -49,7 +58,7 @@ The MySQL databases to create. A database has the values `name`, `encoding` (def
 
     mysql_users: []
 
-The MySQL users and their privileges. A user has the values `name`, `host` (defaults to `localhost`), `password`, `priv` (defaults to `*.*:USAGE`), and `append_privs` (defaults to `no`). The formats of these are the same as in the `mysql_user` module.
+The MySQL users and their privileges. A user has the values `name`, `host` (defaults to `localhost`), `password`, `priv` (defaults to `*.*:USAGE`), `append_privs` (defaults to `no`),  `state`  (defaults to `present`). The formats of these are the same as in the `mysql_user` module.
 
     mysql_packages:
       - mysql
@@ -64,17 +73,19 @@ The MySQL users and their privileges. A user has the values `name`, `host` (defa
     mysql_port: "3306"
     mysql_bind_address: '0.0.0.0'
     mysql_datadir: /var/lib/mysql
+    mysql_socket: *default value depends on OS*
+    mysql_pid_file: *default value depends on OS*
 
 Default MySQL connection configuration.
 
     mysql_log: ""
-    mysql_log_error: /var/log/mysqld.log
-    mysql_syslog_tag: mysqld
+    mysql_log_error: *default value depends on OS*
+    mysql_syslog_tag: *default value depends on OS*
 
 MySQL logging configuration. Setting `mysql_log` (the general query log) or `mysql_log_error` to `syslog` will make MySQL log to syslog using the `mysql_syslog_tag`.
 
     mysql_slow_query_log_enabled: no
-    mysql_slow_query_log_file: /var/log/mysql-slow.log
+    mysql_slow_query_log_file: *default value depends on OS*
     mysql_slow_query_time: 2
 
 Slow query log settings. Note that the log file will be created by this role, but if you're running on a server with SELinux or AppArmor, you may need to add this path to the allowed paths for MySQL, or disable the mysql profile. For example, on Debian/Ubuntu, you can run `sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/usr.sbin.mysqld && sudo service apparmor restart`.
@@ -84,10 +95,11 @@ Slow query log settings. Note that the log file will be created by this role, bu
     mysql_table_open_cache: "256"
     [...]
 
-The rest of the settings in `defaults/main.yml` control MySQL's memory usage. The default values are tuned for a server where MySQL can consume ~512 MB RAM, so you should consider adjusting them to suit your particular server better.
+The rest of the settings in `defaults/main.yml` control MySQL's memory usage and some other common settings. The default values are tuned for a server where MySQL can consume ~512 MB RAM, so you should consider adjusting them to suit your particular server better.
 
     mysql_server_id: "1"
     mysql_max_binlog_size: "100M"
+    mysql_binlog_format: "ROW"
     mysql_expire_logs_days: "10"
     mysql_replication_role: ''
     mysql_replication_master: ''
@@ -140,4 +152,4 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2014 by [Jeff Geerling](http://jeffgeerling.com/), author of [Ansible for DevOps](http://ansiblefordevops.com/).
+This role was created in 2014 by [Jeff Geerling](http://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
