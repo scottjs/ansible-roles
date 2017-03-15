@@ -1,0 +1,10 @@
+---
+
+- name: configure php to use mailhog
+  lineinfile:
+    dest: "/etc/php.ini"
+    regexp: "^sendmail_path = /usr/sbin/sendmail -t -i"
+    line: "sendmail_path = /usr/sbin/ssmtp -t"
+    state: present
+  notify: restart apache
+  when: configure_mailhog

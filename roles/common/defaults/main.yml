@@ -1,0 +1,17 @@
+---
+
+common_packages:
+  - git
+  - nano
+  - curl
+  - wget
+  - vim
+  - man
+  - unzip
+  - ntp
+  - ed
+  - bind-utils
+
+timezone_file: "/usr/share/zoneinfo/Europe/London"
+
+configure_ntpd: true
