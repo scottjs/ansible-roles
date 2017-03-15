@@ -1,5 +1,4 @@
 ---
-
 - name: set selinux enforcing
   selinux: policy=targeted state=permissive
   ignore_errors: yes

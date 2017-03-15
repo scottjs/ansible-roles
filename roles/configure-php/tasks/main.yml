@@ -1,5 +1,4 @@
 ---
-
 - name: update php config to include mailhog
   lineinfile:
     dest: "/etc/php.ini"

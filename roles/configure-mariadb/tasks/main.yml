@@ -1,5 +1,4 @@
 ---
-
 - name: add mariadb repo
   copy:
     content: |
@@ -11,4 +10,4 @@
       gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
       gpgcheck=1
     dest: /etc/yum.repos.d/MariaDB.repo
-  when: install_mariadb10 and ansible_os_family == 'RedHat'
+  when: enable_mariadb10 and ansible_os_family == 'RedHat'

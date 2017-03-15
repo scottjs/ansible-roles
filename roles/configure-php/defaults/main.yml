@@ -1,4 +1,3 @@
 ---
-
 php_configure_mailhog: true
 php_short_open_tag: true
