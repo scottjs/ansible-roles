@@ -3,7 +3,7 @@
   lineinfile:
     dest: "/etc/php.ini"
     regexp: "^sendmail_path = /usr/sbin/sendmail -t -i"
-    line: "sendmail_path = /usr/sbin/ssmtp -t"
+    line: "sendmail_path = /opt/mailhog/mhsendmail"
     state: present
   notify: restart apache
   when: php_configure_mailhog
