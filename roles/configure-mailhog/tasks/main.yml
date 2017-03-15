@@ -6,4 +6,4 @@
     line: "sendmail_path = /usr/sbin/ssmtp -t"
     state: present
   notify: restart apache
-  when: configure_mailhog
+  when: php_configure_mailhog
