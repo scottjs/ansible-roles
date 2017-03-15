@@ -1,5 +1,4 @@
 ---
-
 - name: update yum
   yum: name=* state=latest
 

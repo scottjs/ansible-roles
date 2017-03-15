@@ -1,5 +1,4 @@
 ---
-
 - name: git local user
   local_action: shell git config user.name
   register: git_local_user

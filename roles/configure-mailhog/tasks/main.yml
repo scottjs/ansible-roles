@@ -1,5 +1,4 @@
 ---
-
 - name: configure php to use mailhog
   lineinfile:
     dest: "/etc/php.ini"

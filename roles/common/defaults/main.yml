@@ -1,5 +1,4 @@
 ---
-
 common_packages:
   - git
   - nano
@@ -13,5 +12,4 @@ common_packages:
   - bind-utils
 
 timezone_file: "/usr/share/zoneinfo/Europe/London"
-
 configure_ntpd: true
