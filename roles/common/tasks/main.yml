@@ -1,10 +1,7 @@
 ---
-- name: update yum
-  yum: name=* state=latest
 
-- name: install common tools
-  yum: name={{ item }} state=installed
-  with_items: "{{ common_packages }}"
+- include: "configure-{{ ansible_os_family }}.yml"
+  static: no
 
 - name: set up time zone symlink
   file:
