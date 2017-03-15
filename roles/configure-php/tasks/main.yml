@@ -1,5 +1,4 @@
 ---
-# file: roles/php/tasks/main.yml
 
 - name: update php config to include mailhog
   lineinfile:
@@ -8,6 +7,7 @@
     line: "sendmail_path = /usr/sbin/ssmtp -t"
     state: present
   notify: restart apache
+  when: php_configure_mailhog
 
 - name: update php config to enable short open tags
   lineinfile:
@@ -16,3 +16,4 @@
     line: "short_open_tag = True"
     state: present
   notify: restart apache
+  when: php_short_open_tag

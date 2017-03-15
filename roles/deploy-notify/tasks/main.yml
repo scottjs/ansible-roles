@@ -1,5 +1,4 @@
 ---
-# file: roles/mail/main.yml
 
 - name: git local user
   local_action: shell git config user.name
@@ -32,7 +31,7 @@
                 port=587
                 username="{{ smtp_username }}"
                 password="{{ smtp_password }}"
-                from="{{ smtp_from_address }}"
+                from="{{ from_address }}"
                 to="{{ notify_users }}"
                 subject="[Deployment] {{ ansistrano_git_repo }} ({{ ansistrano_git_branch }}@{{ git_hash_short.stdout }})"
                 body="{{ lookup('file', './templates/email_body.txt') }}"

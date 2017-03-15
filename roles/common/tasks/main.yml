@@ -1,35 +1,32 @@
 ---
-# file: roles/common/tasks/main.yml
 
 - name: update yum
   yum: name=* state=latest
 
-- name: install standard tools
+- name: install common tools
   yum: name={{ item }} state=installed
-  with_items:
-     - git
-     - nano
-     - curl
-     - wget
-     - vim
-     - man
-     - unzip
-     - ntp
-     - ed
-     - bind-utils
+  with_items: "{{ common_packages }}"
 
 - name: set up time zone symlink
-  file: src=/usr/share/zoneinfo/Europe/London dest=/etc/localtime owner=root group=root state=link
+  file:
+    src: "{{ timezone_file }}"
+    dest: /etc/localtime
+    owner: root
+    group: root
+    state: link
+  when: configure_ntpd
 
 - name: configure ntp
   template: src=ntp.conf.j2 dest=/etc/ntp.conf
   notify:
     - restart ntpd
   tags: ntp
+  when: configure_ntpd
 
 - name: ensure ntp is running and enabled
   service: name=ntpd state=running enabled=yes
   tags: ntp
+  when: configure_ntpd
 
 - name: disable GSSAPIAuthentication for ssh login
   lineinfile:
