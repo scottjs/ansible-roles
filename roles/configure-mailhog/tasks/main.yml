@@ -6,4 +6,3 @@
     line: "sendmail_path = /opt/mailhog/mhsendmail"
     state: present
   notify: restart apache
-  when: php_configure_mailhog

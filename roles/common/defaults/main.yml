@@ -10,6 +10,3 @@ common_packages:
   - ntp
   - ed
   - bind-utils
-
-timezone_file: "/usr/share/zoneinfo/Europe/London"
-configure_ntpd: true

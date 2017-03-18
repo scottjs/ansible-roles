@@ -1,0 +1,17 @@
+---
+- name: disable GSSAPIAuthentication for ssh login
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^GSSAPIAuthentication"
+    line: "GSSAPIAuthentication no"
+    state: present
+  notify: restart sshd
+  ignore_errors: yes
+
+- name: disable UseDNS for ssh login
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    line: "UseDNS no"
+    state: present
+  notify: restart sshd
+  ignore_errors: yes
