@@ -5,5 +5,7 @@
     regexp: "^sendmail_path = /usr/sbin/sendmail -t -i"
     line: "sendmail_path = /opt/mailhog/mhsendmail"
     state: present
-  notify: restart apache
+  notify:
+    - restart apache
+    - restart php-fpm
   when: mailhog_configure_php
