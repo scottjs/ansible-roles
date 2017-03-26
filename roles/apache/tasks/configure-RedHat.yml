@@ -4,7 +4,13 @@
   with_items: "{{ apache_vhosts }}"
   when: apache_create_vhost_directories
 
+- name: Check if user exists
+  action: shell /usr/bin/getent passwd {{ deploy_user }} | /usr/bin/wc -l | tr -d ' '
+  register: deploy_user_exists
+  when: deploy_user is defined
+
 - name: Set vhost directory permissions
   file: path={{ item.projectroot }} owner={{ deploy_user }} group={{ deploy_user }}
   with_items: "{{ apache_vhosts }}"
-  when: deploy_user is defined and apache_configure_vhost_permissions
+  when: deploy_user_exists.stdout != "0" and deploy_user is defined and apache_vhost_permissions
+  ignore_errors: true

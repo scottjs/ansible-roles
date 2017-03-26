@@ -13,5 +13,6 @@ packages:
   - ed
   - bind-utils
   - mysql
+  - nodejs
   - net-tools
   - libselinux-python
