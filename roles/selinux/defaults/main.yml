@@ -1,0 +1,3 @@
+---
+selinux_manage: true
+selinux_state: permissive

@@ -1,4 +1,0 @@
----
-
-- include: "configure-{{ ansible_os_family }}.yml"
-  static: no

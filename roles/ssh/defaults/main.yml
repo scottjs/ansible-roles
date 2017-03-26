@@ -1,0 +1,13 @@
+---
+ssh_manage: true
+ssh_config_file: /etc/ssh/sshd_config
+ssh_authentication_public_key: "yes"
+ssh_authentication_password: "no"
+ssh_authentication_gss_api: "no"
+ssh_authentication_kerberos: "no"
+ssh_challenge_response: "no"
+ssh_login_as_root: "no"
+ssh_login_with_empty_password: "no"
+ssh_strict_mode: "yes"
+ssh_ignore_rhosts: "yes"
+ssh_x11_forwarding: "no"

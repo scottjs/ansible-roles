@@ -1,0 +1,25 @@
+---
+- name: Create users
+  user:
+    name: "{{ item.username }}"
+    groups: "{{ item.groups }}"
+    password: "{{ item.password }}"
+    append: true
+    state: present
+    generate_ssh_key: "{{ item.generate_ssh_key }}"
+    ssh_key_bits: 4096
+  with_items: "{{ users_available }}"
+
+- name: Add authorized keys to users
+  authorized_key:
+    user: "{{ item.username }}"
+    key: "{{ lookup( 'file', item.path_to_file ) }}"
+  with_items: "{{ users_authorized_keys }}"
+
+- name: Enable sudo usage that does not require password for users
+  template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: 0440

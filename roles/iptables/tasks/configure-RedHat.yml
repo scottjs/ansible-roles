@@ -1,0 +1,28 @@
+---
+- name: Remove firewalld
+  yum:
+    name: firewalld
+    state: absent
+
+- name: Install iptables packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - iptables
+    - iptables-services
+
+- name: Add firewall rules
+  template:
+    src: firewall-rules.j2
+    dest: /etc/sysconfig/iptables
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart iptables
+
+- name: Start and enable iptables service
+  service:
+    name: iptables
+    state: started
+    enabled: yes

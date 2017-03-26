@@ -1,0 +1,10 @@
+---
+users_manage: true
+users_available:
+  - { username: deploy, groups: 'wheel', generate_ssh_key: yes, password: "$6$zSvC657chJ1Ast9l$Y..o6TXGczuu.nxokyxqBW/mbaPm6hv24gck.6oOcot9L5/gnA3pZR90SK1XsOdjGUh8QvoeL7fFpvgBKAHzz/" }
+
+users_authorized_keys:
+  - { username: deploy, path_to_file: "~/.ssh/id_rsa.pub" }
+
+users_without_sudo_password:
+  - deploy

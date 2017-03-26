@@ -1,0 +1,5 @@
+---
+- name: Set selinux enforcing
+  selinux: policy=targeted state={{ selinux_state }}
+  ignore_errors: yes
+  when: selinux_manage

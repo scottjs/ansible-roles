@@ -1,0 +1,9 @@
+---
+- name: Update yum
+  yum: name=* state=latest
+  when: packages_update_all
+
+- name: Install common packages
+  yum: name={{ item }} state=installed
+  with_items: "{{ packages }}"
+  when: packages_install_common

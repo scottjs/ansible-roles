@@ -1,0 +1,17 @@
+---
+packages_manage: true
+packages_update_all: true
+packages_install_common: true
+packages:
+  - git
+  - nano
+  - curl
+  - wget
+  - vim
+  - man
+  - unzip
+  - ed
+  - bind-utils
+  - mysql
+  - net-tools
+  - libselinux-python
