@@ -1,0 +1,10 @@
+---
+- name: Create vhost directories
+  file: path={{ item.projectroot }} state=directory
+  with_items: "{{ apache_vhosts }}"
+  when: apache_create_vhost_directories
+
+- name: Set vhost directory permissions
+  file: path={{ item.projectroot }} owner={{ deploy_user }} group={{ deploy_user }}
+  with_items: "{{ apache_vhosts }}"
+  when: deploy_user is defined and apache_configure_vhost_permissions

@@ -1,0 +1,11 @@
+---
+- name: Add mariadb repo
+  copy:
+    content: |
+      [mariadb]
+      name = MariaDB
+      baseurl = {{ mariadb_repo_url }}
+      gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+      gpgcheck=1
+    dest: /etc/yum.repos.d/MariaDB.repo
+  when: mariadb_add_repo

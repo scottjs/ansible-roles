@@ -1,0 +1,6 @@
+---
+- include: timezone.yml
+  when: "ntp_manage_timezone == true"
+
+- include: chrony.yml
+  when: "ntp_manage_chrony == true"

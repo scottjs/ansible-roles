@@ -1,0 +1,102 @@
+---
+- name: Configure public key authentication
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "PubkeyAuthentication {{ ssh_authentication_public_key }}"
+    state: present
+    regexp: '^#?PubkeyAuthentication'
+  notify: restart sshd
+
+- name: Configure password authentication
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "PasswordAuthentication {{ ssh_authentication_password }}"
+    state: present
+    regexp: '^#?PasswordAuthentication'
+  notify: restart sshd
+
+- name: Configure PAM authentication
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "ChallengeResponseAuthentication {{ ssh_challenge_response }}"
+    state: present
+    regexp: '^#?ChallengeResponseAuthentication'
+  notify: restart sshd
+
+- name: Configure GSS API authentication
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "GSSAPIAuthentication {{ ssh_authentication_gss_api }}"
+    state: present
+    regexp: '^#?GSSAPIAuthentication'
+  notify: restart sshd
+
+- name: Configure Kerberos authentication
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "KerberosAuthentication {{ ssh_authentication_kerberos }}"
+    state: present
+    regexp: '^#?KerberosAuthentication'
+  notify: restart sshd
+
+- name: Configure logging in as root
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "PermitRootLogin {{ ssh_login_as_root }}"
+    state: present
+    regexp: '^#?PermitRootLogin'
+  notify: restart sshd
+
+- name: Configure access for users with empty password
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "PermitEmptyPasswords {{ ssh_login_with_empty_password }}"
+    state: present
+    regexp: '^#?PermitEmptyPasswords'
+  notify: restart sshd
+
+- name: Configure strict mode
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "StrictModes {{ ssh_strict_mode }}"
+    state: present
+    regexp: '^#?StrictModes'
+  notify: restart sshd
+
+- name: Set .rhosts and .shosts files checks
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "IgnoreRhosts {{ ssh_ignore_rhosts }}"
+    state: present
+    regexp: '^#?IgnoreRhosts'
+  notify: restart sshd
+
+- name: Configure X11 Forwarding
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "X11Forwarding {{ ssh_x11_forwarding }}"
+    state: present
+    regexp: '^#?X11Forwarding'
+  notify: restart sshd
+
+- name: Make sure that protocol 2 is enabled
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "Protocol 2"
+    state: present
+    regexp: '^#?Protocol'
+  notify: restart sshd
+
+- name: Make sure that printing last log is enabled
+  lineinfile:
+    dest: "{{ ssh_config_file }}"
+    line: "PrintLastLog yes"
+    state: present
+    regexp: '^#?PrintLastLog'
+  notify: restart sshd
+
+- name: Make sure that sshd service is started and enabled on boot
+  service:
+    name: sshd
+    state: started
+    enabled: yes

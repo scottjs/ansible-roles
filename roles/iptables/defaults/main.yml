@@ -1,0 +1,23 @@
+---
+iptables_manage: true
+iptables_enable_port_scan_protection: yes
+iptables_drop_fragmented_packages: yes
+iptables_enable_ping_of_death_protection: yes
+iptables_force_syn_packets_check: yes
+iptables_outgoing_udp_ports:
+  - 53
+  - 123
+
+iptables_incoming_udp_ports: []
+
+iptables_outgoing_tcp_ports:
+  - 22
+  - 80
+  - 443
+
+iptables_incoming_tcp_ports:
+  - 22
+  - 80
+  - 443
+
+iptables_extra_rules: []

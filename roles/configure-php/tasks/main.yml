@@ -1,9 +1,0 @@
----
-- name: update php config to enable short open tags
-  lineinfile:
-    dest: "/etc/php.ini"
-    regexp: "^short_open_tag = False"
-    line: "short_open_tag = True"
-    state: present
-  notify: restart apache
-  when: php_short_open_tag

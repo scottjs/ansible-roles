@@ -1,0 +1,4 @@
+---
+- include: "configure-{{ ansible_os_family }}.yml"
+  static: no
+  when: ssh_manage

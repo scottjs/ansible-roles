@@ -1,0 +1,5 @@
+{% if users_without_sudo_password|length > 0 %}
+{% for user in users_without_sudo_password %}
+{{ user }} ALL=(ALL) NOPASSWD: ALL
+{% endfor %}
+{% endif %}

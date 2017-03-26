@@ -1,0 +1,3 @@
+---
+mailhog_manage: true
+mailhog_configure_php: true

@@ -1,0 +1,42 @@
+---
+- name: Git local user
+  local_action: shell git config user.name
+  register: git_local_user
+  when: notify_users is defined
+  ignore_errors: yes
+
+- name: Git commit hash
+  shell: git --git-dir={{ ansistrano_deploy_to }}/repo/.git rev-parse --verify --short origin/{{ ansistrano_git_branch }}
+  register: git_hash_short
+  when: notify_users is defined
+
+- name: Git user
+  shell: git --git-dir={{ ansistrano_deploy_to }}/repo/.git --no-pager show -s --pretty=format:'%an %ae' {{ git_hash_short.stdout }}
+  register: git_user
+  when: notify_users is defined
+
+- name: Git message
+  shell: git --git-dir={{ ansistrano_deploy_to }}/repo/.git --no-pager show -s --pretty=format:'%B' {{ git_hash_short.stdout }}
+  register: git_message
+  when: notify_users is defined
+
+- name: Setup email template
+  local_action: template src="email_body.j2" dest="./email_body.txt"
+  when: notify_users is defined
+
+- name: Send email
+  local_action: mail
+                host="{{ smtp_host }}"
+                port=587
+                username="{{ smtp_username }}"
+                password="{{ smtp_password }}"
+                from="{{ from_address }}"
+                to="{{ notify_users }}"
+                subject="[Deployment] {{ ansistrano_git_repo }} ({{ ansistrano_git_branch }}@{{ git_hash_short.stdout }})"
+                body="{{ lookup('file', './email_body.txt') }}"
+                subtype="html"
+  when: notify_users is defined
+
+- name: Cleanup temp files
+  local_action: file path="./email_body.txt" state=absent
+  when: notify_users is defined
