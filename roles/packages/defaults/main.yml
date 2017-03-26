@@ -15,6 +15,3 @@ packages:
   - ed
   - bind-utils
   - mysql
-  - epel-release
-  - nodejs
-  - npm
