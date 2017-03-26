@@ -3,6 +3,8 @@ packages_manage: true
 packages_update_all: true
 packages_install_common: true
 packages:
+  - net-tools
+  - libselinux-python
   - git
   - nano
   - curl
@@ -13,6 +15,6 @@ packages:
   - ed
   - bind-utils
   - mysql
+  - epel-release
   - nodejs
-  - net-tools
-  - libselinux-python
+  - npm
