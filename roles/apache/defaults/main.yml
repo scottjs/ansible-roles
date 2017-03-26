@@ -1,4 +1,4 @@
 ---
 apache_manage: true
 apache_create_vhost_directories: true
-apache_configure_vhost_permissions: true
+apache_vhost_permissions: false
