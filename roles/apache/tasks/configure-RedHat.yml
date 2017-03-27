@@ -14,3 +14,12 @@
   with_items: "{{ apache_vhosts }}"
   when: deploy_user_exists.stdout != "0" and deploy_user is defined and apache_vhost_permissions
   ignore_errors: true
+
+- name: Set apache sendfile option
+  lineinfile:
+    dest: "/etc/httpd/conf/httpd.conf"
+    regexp: "^EnableSendfile"
+    line: "EnableSendfile {{ apache_sendfile_option }}"
+    state: present
+  notify: restart apache
+  when: apache_sendfile_option is defined

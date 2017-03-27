@@ -2,3 +2,4 @@
 apache_manage: true
 apache_create_vhost_directories: true
 apache_vhost_permissions: false
+apache_sendfile_option: "on"
